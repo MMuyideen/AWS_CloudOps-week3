@@ -29,10 +29,6 @@ module "security-group" {
   vpc_id = module.vpc.vpc_id
 }
 
-# # creating Key for instances
-# module "key" {
-#   source = "../modules/key"
-# }
 
 # Creating Application Load balancer
 module "alb" {
@@ -57,14 +53,14 @@ module "asg" {
 
 # creating RDS instance
 
-module "rds" {
-  source        = "../modules/rds"
-  db_sg_id      = module.security-group.db_sg_id
-  pri_sub_5a_id = module.vpc.pri_sub_5a_id
-  pri_sub_6b_id = module.vpc.pri_sub_6b_id
-  db_username   = var.db_username
-  db_password   = var.db_password
-}
+# module "rds" {
+#   source        = "../modules/rds"
+#   db_sg_id      = module.security-group.db_sg_id
+#   pri_sub_5a_id = module.vpc.pri_sub_5a_id
+#   pri_sub_6b_id = module.vpc.pri_sub_6b_id
+#   db_username   = var.db_username
+#   db_password   = var.db_password
+# }
 
 
 # create cloudfront distribution 
@@ -76,12 +72,3 @@ module "cloudfront" {
   project_name            = module.vpc.project_name
 }
 
-
-# # Add record in route 53 hosted zone
-
-# module "route53" {
-#   source                    = "../modules/route53"
-#   cloudfront_domain_name    = module.cloudfront.cloudfront_domain_name
-#   cloudfront_hosted_zone_id = module.cloudfront.cloudfront_hosted_zone_id
-
-# }
